@@ -1,0 +1,722 @@
+!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+canvas {
+    border:1px solid #d3d3d3;
+    background-color: #f1f1f1;
+}
+</style>
+</head>
+<body onload="startGame()">
+<script>
+
+var myGamePiece;
+var myObstacles = [];
+var myScore;
+
+function startGame() {
+    myGamePiece = new component(30, 30, "green", 10, 120);
+    myGamePiece.gravity = 0.05;
+    myScore = new component("30px", "Consolas", "black", 280, 40, "text");
+    myGameArea.start();
+}
+
+var myGameArea = {
+    canvas : document.createElement("canvas"),
+    start : function() {
+        this.canvas.width = 500;
+        this.canvas.height = 270;
+        this.context = this.canvas.getContext("2d");
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        this.frameNo = 0;
+        this.interval = setInterval(updateGameArea, 30);
+        },
+    clear : function() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+}
+
+function component(width, height, color, x, y, type) {
+    this.type = type;
+    this.score = 0;
+    this.width = width;
+    this.height = height;
+    this.speedX = 0;
+    this.speedY = 0;    
+    this.x = x;
+    this.y = y;
+    this.gravity = 0;
+    this.gravitySpeed = 0;
+    this.update = function() {
+        ctx = myGameArea.context;
+        if (this.type == "text") {
+            ctx.font = this.width + " " + this.height;
+            ctx.fillStyle = color;
+            ctx.fillText(this.text, this.x, this.y);
+        } else {
+            ctx.fillStyle = color;
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
+    }
+    this.newPos = function() {
+        this.gravitySpeed += this.gravity;
+        this.x += this.speedX;
+        this.y += this.speedY + this.gravitySpeed;
+        this.hitBottom();
+    }
+    this.hitBottom = function() {
+        var rockbottom = myGameArea.canvas.height - this.height;
+        if (this.y > rockbottom) {
+            this.y = rockbottom;
+            this.gravitySpeed = 0;
+        }
+    }
+    this.crashWith = function(otherobj) {
+        var myleft = this.x;
+        var myright = this.x + (this.width);
+        var mytop = this.y;
+        var mybottom = this.y + (this.height);
+        var otherleft = otherobj.x;
+        var otherright = otherobj.x + (otherobj.width);
+        var othertop = otherobj.y;
+        var otherbottom = otherobj.y + (otherobj.height);
+        var crash = true;
+        if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
+            crash = false;
+        }
+        return crash;
+    }
+}
+
+function updateGameArea() {
+    var x, height, gap, minHeight, maxHeight, minGap, maxGap;
+    for (i = 0; i < myObstacles.length; i += 1) {
+        if (myGamePiece.crashWith(myObstacles[i])) {
+            return;
+        } 
+    }
+    myGameArea.clear();
+    myGameArea.frameNo += 3;
+    if (myGameArea.frameNo == 1 || everyinterval(150)) {
+        x = myGameArea.canvas.width;
+        minHeight = 20;
+        maxHeight = 200;
+        height = Math.floor(Math.random()*(maxHeight-minHeight+1)+minHeight);
+        minGap = 50;
+        maxGap = 200;
+        gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
+        myObstacles.push(new component(10, height, "green", x, 0));
+        myObstacles.push(new component(10, x - height - gap, "green", x, height + gap));
+    }
+    for (i = 0; i < myObstacles.length; i += 3) {
+        myObstacles[i].x += -1;
+        myObstacles[i].update();
+    }
+    myScore.text="SCORE: " + myGameArea.frameNo;
+    myScore.update(9);
+    myGamePiece.newPos(7);
+    myGamePiece.update(9);
+}
+
+function everyinterval(n) {
+    if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
+    return false;
+}
+
+function accelerate(n) {
+    myGamePiece.gravity = n;
+}
+</script>
+
+   } 
+<br>
+<button onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.05)">ACCELERATE</button>
+<p>Use the ACCELERATE button to stay in the air</p>
+<p>How long can you stay alive?</p>
+</body>
+</html>
+
+     <body>
+
+       <div class ="container">
+        <div class ="time"><div>
+
+<title> project developing </title>
+<body>
+    <h3 id="head">
+      <p>VIT-AP</p>
+    </h3>
+  
+    <input type="text" id="box">
+  <input type="submit" id="button" >
+  
+    <div id="output"></div>
+  
+  
+    <h2 class="title">Items</h2>
+  
+  
+    <ol id="vit" class="list-group">
+                <li class="list">Item 1</li>
+                <li class="list">Item 2</li>
+                <li class="list">Item 3</li>
+                <li class="list">Item 4</li>
+                
+    </ol>
+  
+  
+  
+    <select id="sel">
+      <option selected disabled>Select your fav</option>
+      <option value="Arya">Arya</option>
+      <option value="Sansa">Sansa</option>
+      <option value ="deepa">deepa</option>
+    </select>
+  
+  
+  
+  
+    <script src="asish.js"></script>
+  
+  
+ 
+
+</style>
+
+
+
+
+</body>
+
+</html>
+
+</body>
+
+</html>
+<html>
+  
+<head>
+    <title> Welcome to my site | saiviraj </title>
+    <style>
+        table {
+            border: 7px solid black;
+        }
+
+        td,
+        th {
+            border: 7px solid green;
+            text-align: center;
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>HTML Table</h3>
+    
+    <table>
+        <caption> My Multi level Table</caption>
+    <tr>
+
+    <td rowspan="8" colspan="7">Col0</td>
+    <td rowspan="3">col1</td>
+    <td colspan="5">col2</td>
+    <td colspan ="8">col3</td>
+    <td rowspan ="7">col6</td>
+    <td colspan = "50">col5</td>
+
+
+    </tr>
+
+
+
+    <tr>
+      
+        <td>col5a</td>
+        <td>col2b</td>
+
+
+    </tr>
+    <tr>
+
+        <td rowspan="8">row1</td>
+        <td>row1a</td>
+        <td>123</td>
+        <td>456</td>
+        <td>789</td>
+    </tr>
+    <tr>
+
+         <td>row1b</td>
+        <td>1237</td>
+        <td>456y</td>
+        <td>789g</td>
+        <td>678</td>
+        <td>789</td>
+
+        <style>
+          .rowspan{
+            color:red;
+            background-color:green;
+            border: solid;
+            column-gap:1fr,3fr;
+           
+          } 
+          </style> 
+    </tr>
+    <tr>
+
+        <td colspan="7">row2</td>
+        <td>12377</td>
+        <td>45687</td>
+        <td>78979</td>
+    </tr>
+
+    </table>
+
+ 
+</body>
+
+</html>
+
+</html>
+<!DOCTYPE html>
+</html
+<body></body>
+</body>
+<h3> LOGIN PAGE </h3>
+<form method="POST" action="">
+User Name <input type="text" name="un">
+<br>
+Password <input type="text" name="pw">
+<br>
+<input type = "submit">
+</form>
+
+</body>
+</html>
+<!Doctype html>
+<html>
+<head> 
+ <title> doc </title> 
+</head>  
+  <a href ="https://web.microsoftstream.com/video/2c4bfc9d-a447-4abf-baae-1a3f959053bf" width:100px height:100px>micro</a><br>
+  <a href = "https://gaana.com/newrelease">song</a><br>
+  This is my University: <a href="https://google.co.in" color:green target="blank">VIT_AP</a>
+  <audio src = "songs.mp3">song</audio><br>
+ <input  type = "text" name ="submit" value ="*" >
+ <input  type = "text" name ="submit" value = "+">
+ <input type = "text" name = "submit" value = "-"> 
+ <input type = "date" value ="16/5/2021">
+ <input type = select>
+ <option value ="submit">male</option>
+ <option value = "submit">female</option>
+ <input type = "text" value = "saiviraj">
+ <input type = "text" value ="https://web.microsoftstream.com/video/2c4bfc9d-a447-4abf-baae-1a3f959053bf">
+ <input type = "submit" value = "18/9/2021">
+ <input type = "serial" value ="seetha">
+ <option value ="">kanakam</option>
+ <option value ="">mogalirekulu</option>
+ <opion value ="">sasairekha</option>
+ <input type = "dateofbirth"  value = "30/10/2001">
+ <input type = "place" city = "vijayawada">
+ <input type = "website" name = "url">
+ <input type  = city>
+ <option value = "">vanisree</option><br><li>
+ <input type = "date of birth" value = "31/5/2021">
+ <input  type = "id" value ="primary key">
+ Qualification :<select>
+  <option value = "">btech</option>
+  <option  value ="">mtech</option> 
+  <option  value = "">degree</option>
+  <option value = "">ms</option>
+</select> 
+<input type = "submit" value = "change" onclick = "fun()"> 
+ <input type = "file"><br> 
+ <input type = "image"><br>
+ <input type = "upload photo"><br>
+ <input  type = "submit" value  = "songs"><br>
+ <video src = "songs.mp3" height:100px width:90px controls></video><br>
+ <audio src = "a.mp3" controls></audio><br>
+ <br>
+ name:<input type = "text"><br>
+ email:<input type = "email"><br>
+ password:<input type = "password"><br>
+ date of birth:<input  type = "submit" value = "30/10/2001">
+ date:<input type="date"><br>
+ <br>
+ <form action = "sai" method = "addition">
+ <input type = "text" name = "text"><br>
+ <input type = "text" name = "text"><br>
+ <input type = "text" name = "text"><br>
+ <input type = "submit" name = "add" value = "+">
+ <input type = "submit" name = "subtract" value = "-">
+ <input type = "submit">
+ <input type = "reset">
+ <br>
+  retrive:<input type = "text" value = "vijay">
+<h1> what is css</h1><br>
+<h1> real world </h1><br>
+<h1> html</h1>
+<style>
+h1{
+ color:red;
+ background-color:yellow;
+ font-size:200px;
+ height:400px;
+ width: 200px;
+ font-weight:bold;
+ font-style:italic;
+ padding:200px;
+ margin:200px;
+ margin space:200px;  
+ }
+ 
+
+ .grid{ 
+ color:red;
+ background-color:green;
+ height:300px;
+ width:300px;
+ padding: 300px;
+ margin: 300px;
+ font-size:200px;
+ font-weight:bold color: black;
+ font stretch: extra-expanded;
+ }
+ 
+
+ <html lang="en">
+<head>
+
+    <title>Document</title>
+    <style>
+        .container
+        {
+            height:100vh;
+            /* width:100vw; */
+            /* margin:auto; */
+            background-color: pink;
+            display: flex;
+            flex-direction: column;
+            
+        }
+
+        .row
+        {
+            height:30vh;
+            background-color: blueviolet;
+            /* margin: 10px; */
+            border: 2px solid green;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+           
+        }
+
+        .element-1
+        {
+            height:auto;
+            width:50px;
+            font-size: 100px;
+            padding:80px;
+            font-weight: bold;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin:20px;
+
+             
+         }
+         
+        .element-2
+        {
+            height:auto;
+            width: 50px;
+            font-size: 100px;
+            padding:50px;
+            font-weight: bold;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+           margin:20px;
+
+         }
+         .element-3
+        {
+            height:auto;
+            width: auto;
+            font-size: 100px;
+            padding:50px;
+            font-weight: bold;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+           margin:20px;
+
+         }
+
+         .col1{ background-color: yellow;}
+         .col2{ background-color: orange;}
+         .col3{ background-color: pink;}
+         .col4{ background-color: green;}
+         .col5{ background-color: rgb(247, 54, 173);}
+         .col6{ background-color: rgb(83, 52, 221);}
+         .col7{ background-color: rgb(233, 103, 43);}
+          .col8{ background-color: rgb(233,103.76)}
+          
+    </style>
+
+</head>
+<body>
+    <div class="container">
+
+        <div class="row">
+            <div class="element-1 col1">1</div>
+            <div class="element-1 col2">2</div>
+            <div class="element-1 col3">3</div>
+            <div class="element-1 col4">5</div>
+
+        </div>
+        <div class="row">
+            <div class="element-2 col5">6</div>
+            <div class="element-2 col6">7</div>
+            <div class="element-2 col7">8</div>
+            <div class ="element-2 col8">10</div>
+        </div>
+
+    
+</body>
+</html>
+
+
+<body>
+<h1>web development</h1>
+<style>
+h1{
+color: blue;
+background-color: red;
+height:100px;
+width:70px;
+margin:9px;
+padding:8px;
+font-size:9px;
+transform:rotate(95deg);
+}
+.row
+        {
+            height:30vh;
+            background-color: blueviolet;
+            /* margin: 10px; */
+            border: 2px solid green;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            padding:90px;
+            margin:90px;
+        .column{
+            height:70vh;
+            background-color: blueviolet;
+            /* margin: 10px; */
+            border: 2px solid green;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            padding:90px;
+            margin:90px   
+        }
+
+        </body></style>
+
+        a
+        {
+            display: inline-table;
+            background-color: red;   
+            color:green; 
+            text-decoration: none;
+            margin:5px;
+            padding:50px
+            width:90px;
+            text-align: center;
+            border: 2px solid red;
+            font-weight: bold;
+        }
+
+        a:hover{
+            color:white;
+            background-color: blue;
+            border: 3px solid orange;
+            padding: 5px;
+            margin:8px;
+            transform.rotate(90deg);
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<a href="https://google.com" target="blank">Home</a>
+
+<a href="https://yahoo.com" target="blank>Services">Services</a>
+
+<a href="https://sify.com" target="blank">Contact us</a>
+<a href ="https://web.microsoftstream.com/video/2c4bfc9d-a447-4abf-baae-1a3f959053bf">micro</a>
+
+</body>
+<br><br>
+
+</html>
+<html>
+
+<head>
+    <title> Welcome to my site | sai </title>
+    <style>
+      .myclass
+      {
+        color:red;
+        color:black;
+        background-color: yellow;
+          padding:8px;
+          margin:7px;
+          border: solid;
+        border-bottom: 30px solid red;
+        border-top: 30px solid green;
+        border-left: 30px solid yellow;
+        border-right: 30px solid violet;
+        
+        background-image: url("https://www.zastavki.com/pictures/1920x1200/2012/Nature_Other_Beautiful_scenery_033681_.jpg");
+        
+       
+         background-size:cover;
+         background-position: center;
+         background-repeat: no-repeat;
+
+         height:900px;
+         width:auto;
+
+      }
+
+      
+
+    </style>
+</head>
+<body>
+   <div class="myclass">
+     <h3>Welcome to css</h3>
+     <p>How are you</p>
+     <p id="myid">Good Morning</p>
+   </div>  
+</body>
+</html>
+
+
+<body>
+<h1> project developing</h1>
+<style>
+h1{
+height:100px;
+color:blue;
+margin:90px;
+padding:90px;
+weight:auto;
+background-color:red;
+border:7px;
+border-left:9px solid green;
+border-right:solid red;
+border:solid;
+border-bottom:5px red;
+justify-content: center;
+transform: rotatez(45deg);
+
+}
+
+<html>
+
+
+
+<br><br>
+<br>
+<head>
+    <title> Welcome to my site | saiviraj </title>
+</head>
+<style>
+
+    .container {
+        background-color: salmon;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 200vh;
+    }
+
+    #box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+        width: 300px;
+        background-color: green;
+        color:ivory;
+        transition-property: all;
+        transition-duration: 8s;
+
+    }
+
+    #box:hover {
+        background-color: green;
+        height: 600px;
+        width: 700px;
+        border-radius: 90%;
+        font-size: 45px; 
+        transform: rotatez(540deg);
+         
+    }
+
+  #square:hover{
+      display: flex;
+      height: 100px;
+      width:70px;
+      color:green;
+      background:red;
+      align-items:center;
+      justify-content:top;
+  }
+  #triangle:hover {
+        background-color: green;
+        height: 500px;
+        width: 700px;
+        border-radius: 90%;
+        font-size: 45px; 
+        transform: rotatez(540deg);
+       
+    }
+ 
+
+</style>
+
+<body>
+    <div class="container" id=1>
+    <div class ="container" id =2>
+        <div id="box">
+        <div id ="triangle">
+        <div id ="square"></div>
+           Welcome to VIT 
+        </div>
+    </div>
+</body>
+
+</html>
+ <html>
+    <body> 
+
+  <br><br>
+
+   
